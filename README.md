@@ -19,6 +19,16 @@ assign and track repairs. It was built for Malaysian road conditions as my Final
 > credentials and environment files are intentionally excluded, so the project is not meant to be
 > cloned and run as-is.
 
+<p align="center">
+  <img src="docs/screenshots/mobile-reporting-flow.jpg" width="900" alt="Mobile reporting flow: home, report form with EXIF GPS, submission confirmation"/>
+  <br/><em>Public reporting on mobile: take a photo, location is read from EXIF, and the AI classifies the hazard after submission.</em>
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/admin-dashboard.png" width="900" alt="Admin dashboard overview"/>
+  <br/><em>Authority dashboard: open workload, model-correction rate, missed detections, retraining status and repair pipeline.</em>
+</p>
+
 ---
 
 ## Highlights
@@ -39,6 +49,13 @@ assign and track repairs. It was built for Malaysian road conditions as my Final
 ---
 
 ## System Architecture
+
+<p align="center">
+  <img src="docs/screenshots/system-architecture.png" width="850" alt="System architecture and repair workflow"/>
+</p>
+
+<details>
+<summary><b>Deployment view</b> (cloud services)</summary>
 
 ```mermaid
 flowchart LR
@@ -63,6 +80,8 @@ flowchart LR
     DS -.->|retrain| TR[train_multi_class.py]
     TR -.->|best.pt| INF
 ```
+
+</details>
 
 ---
 
@@ -95,12 +114,28 @@ flowchart LR
 |:-:|:-:|:-:|:-:|
 | 0.805 | 0.744 | 0.798 | 0.457 |
 
+**Real-world behaviour**, including a known failure case:
+
+<p align="center">
+  <img src="docs/screenshots/qualitative-results.png" width="900" alt="Qualitative results: shadow occlusion, sun glare, flash-flood pooling failure"/>
+</p>
+
+**Tropical-condition stress test.** The same image is run through six simulated scenarios to check
+whether the prediction stays stable:
+
+<p align="center">
+  <img src="docs/screenshots/augmentation-scenarios.jpg" width="850" alt="Detection under glare, rain, canopy shadow, wet surface and fog"/>
+</p>
+
+<details>
+<summary><b>Training curves and confusion matrix</b></summary>
 <p align="center">
   <img src="runs/detect/road_hazards_multi6/results.png" width="720" alt="Training curves"/>
 </p>
 <p align="center">
   <img src="runs/detect/road_hazards_multi6/confusion_matrix_normalized.png" width="480" alt="Normalised confusion matrix"/>
 </p>
+</details>
 
 ### Inference pipeline
 
@@ -126,6 +161,15 @@ Algorithm details: [`docs/guides/ALGORITHM_REFERENCE.md`](docs/guides/ALGORITHM_
 | **Public reporter** (anonymous) | Submit a photo with automatic location, view AI result instantly, track own submissions via an HMAC-signed reporter token, opt in to email status updates |
 | **Admin / authority** | Dashboard with stats and map, review/approve/reject reports, correct AI labels and draw bounding boxes, run augmentation confidence analysis, manage contractor directory, monitor dataset and retraining state |
 | **Contractor** | Token-based partner portal to view assigned repairs and update repair status |
+
+### Screenshots
+
+| | |
+|:-:|:-:|
+| <img src="docs/screenshots/admin-ai-correction.jpg" alt="AI result correction panel"/> | <img src="docs/screenshots/manual-bbox-correction.jpg" alt="Manual bounding-box correction"/> |
+| **AI result correction:** admins verify or relabel detections; corrections feed retraining | **Manual bounding boxes:** missed hazards are boxed by hand and saved as YOLO training labels |
+| <img src="docs/screenshots/hazard-map.jpg" alt="Hazard map with report popup"/> | <img src="docs/screenshots/partner-portal.jpg" alt="Repair partner portal"/> |
+| **Live hazard map:** Leaflet map with status-coded markers and report details | **Repair partner portal:** contractors accept, reject or complete jobs with photo evidence |
 
 ---
 
