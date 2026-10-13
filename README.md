@@ -42,8 +42,9 @@ assign and track repairs. It was built for Malaysian road conditions as my Final
   re-checking, crack bounding-box relocalisation and shadow guarding on top of raw YOLO output.
 - **Tropical-condition stress testing:** six synthetic scenarios (sun glare, canopy shadow, monsoon rain,
   wet surface, fog/haze, low light) with weighted consensus scoring to judge prediction stability.
-- **Human-in-the-loop MLOps:** admin corrections are written back as YOLO-format training samples, with an
-  optional auto-retrain trigger once enough feedback accumulates.
+- **Human-in-the-loop MLOps:** admin corrections are written back as YOLO-format training samples, and an
+  optional auto-retrain runs once enough feedback accumulates. The new model goes live only if its validation
+  mAP@0.5 beats the current one.
 - **End-to-end product:** anonymous public reporting with EXIF GPS extraction, an interactive Leaflet map,
   an admin dashboard, a contractor portal, and email notifications for repair assignments and status updates.
 - **Cloud deployment:** containerised Flask API on Google Cloud Run and a React SPA on Firebase Hosting, plus
@@ -147,7 +148,7 @@ whether the prediction stays stable:
    - Shadow-dominant alligator cracks are downgraded.
    - Low-confidence crack subtypes collapse to a generic `crack`.
 5. **Scenario consensus:** inference across six simulated tropical conditions; weighted class scores decide a stable final label.
-6. **Feedback loop:** admin corrections become new YOLO-labelled samples for retraining.
+6. **Feedback loop:** admin corrections become new YOLO-labelled samples; retrained models are promoted only if validation mAP@0.5 improves.
 
 Algorithm details: [`docs/guides/ALGORITHM_REFERENCE.md`](docs/guides/ALGORITHM_REFERENCE.md)
 

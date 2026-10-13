@@ -283,6 +283,9 @@ AUTO_RETRAIN_BATCH = int(os.getenv('AUTO_RETRAIN_BATCH', '8'))
 AUTO_RETRAIN_IMGSZ = int(os.getenv('AUTO_RETRAIN_IMGSZ', '640'))
 AUTO_RETRAIN_RESUME = os.getenv('AUTO_RETRAIN_RESUME', 'true').strip().lower() in {'1', 'true', 'yes', 'on'}
 AUTO_RETRAIN_RUNNING_GRACE_MIN = int(os.getenv('AUTO_RETRAIN_RUNNING_GRACE_MIN', '10'))
+# A retrained model replaces the live one only if its best validation mAP@0.5
+# beats the current model's by more than this margin (0.0 = any improvement).
+AUTO_RETRAIN_MIN_MAP_GAIN = float(os.getenv('AUTO_RETRAIN_MIN_MAP_GAIN', '0.0'))
 AUTO_RETRAIN_STATE_COLLECTION = os.getenv('AUTO_RETRAIN_STATE_COLLECTION', 'system_state')
 AUTO_RETRAIN_STATE_DOC = os.getenv('AUTO_RETRAIN_STATE_DOC', 'auto_retrain')
 REPORTS_BACKFILL_ON_READ = os.getenv('REPORTS_BACKFILL_ON_READ', 'false').strip().lower() in {'1', 'true', 'yes', 'on'}
@@ -2582,6 +2585,59 @@ def _export_pending_feedback_to_dataset(project_root: Path, batch_id: str):
 
     return {'processed': processed, 'skipped': skipped, 'failed': failed}
 
+def _run_best_map50(run_dir):
+    """Best validation mAP@0.5 recorded in a YOLO run's results.csv, or None."""
+    results_csv = Path(run_dir) / 'results.csv'
+    if not results_csv.exists():
+        return None
+    try:
+        import csv
+        with open(results_csv, newline='', encoding='utf-8') as f:
+            rows = [{k.strip(): v for k, v in row.items()} for row in csv.DictReader(f)]
+        values = [float(r['metrics/mAP50(B)']) for r in rows if r.get('metrics/mAP50(B)')]
+        return max(values) if values else None
+    except Exception as e:
+        print(f"[AUTO-RETRAIN] Could not read {results_csv}: {e}")
+        return None
+
+def _gate_retrained_model(baseline_run, train_started_ts):
+    """Keep a newly trained model only if it beats the current model's mAP@0.5.
+
+    get_model() always loads the newest road_hazards_multi*/weights/best.pt, so a
+    rejected candidate's best.pt is renamed to best_rejected.pt to keep it out of
+    production.
+    """
+    detect_root = Path(__file__).resolve().parent.parent / 'runs' / 'detect'
+    candidates = [
+        p.parent.parent for p in detect_root.glob('road_hazards_multi*/weights/best.pt')
+        if p.stat().st_mtime >= train_started_ts
+    ]
+    if not candidates:
+        return {'decision': 'no_candidate'}
+    candidate_run = max(candidates, key=lambda d: (d / 'weights' / 'best.pt').stat().st_mtime)
+    baseline_map = _run_best_map50(baseline_run) if baseline_run else None
+    candidate_map = _run_best_map50(candidate_run)
+    summary = {
+        'candidateRun': candidate_run.name,
+        'candidateMap50': candidate_map,
+        'baselineRun': baseline_run.name if baseline_run else None,
+        'baselineMap50': baseline_map,
+        'minGain': AUTO_RETRAIN_MIN_MAP_GAIN,
+    }
+
+    if baseline_run and candidate_run.resolve() == baseline_run.resolve():
+        # A resumed run overwrote the live weights in place; nothing to fall back to.
+        summary['decision'] = 'not_gated_resumed_in_place'
+        return summary
+    if candidate_map is not None and (baseline_map is None or candidate_map > baseline_map + AUTO_RETRAIN_MIN_MAP_GAIN):
+        summary['decision'] = 'promoted'
+        return summary
+
+    best_pt = candidate_run / 'weights' / 'best.pt'
+    best_pt.rename(best_pt.with_name('best_rejected.pt'))
+    summary['decision'] = 'rejected'
+    return summary
+
 def _run_auto_retrain_job(pending_count_snapshot, started_at):
     global _retrain_running, _last_retrain_started_at
     project_root = Path(__file__).resolve().parent.parent
@@ -2625,11 +2681,21 @@ def _run_auto_retrain_job(pending_count_snapshot, started_at):
         if resume_used:
             command.append('--resume')
 
+        baseline_weights = Path(_resolve_default_model_path())
+        baseline_run = baseline_weights.parent.parent if baseline_weights.exists() else None
+        train_started_ts = datetime.datetime.now().timestamp()
+
         run_result = subprocess.run(command, cwd=str(project_root), check=False)
         print(f"[AUTO-RETRAIN] Triggered: {' '.join(command)}")
 
+        promotion = None
+        if run_result.returncode == 0:
+            promotion = _gate_retrained_model(baseline_run, train_started_ts)
+            print(f"[AUTO-RETRAIN] Promotion gate: {promotion}")
+
         completed_state = 'completed' if run_result.returncode == 0 else f'failed_exit_{run_result.returncode}'
         _persist_auto_retrain_state({
+            'promotion': promotion,
             'running': False,
             'lastState': completed_state,
             'lastCompletedAt': datetime.datetime.now(datetime.timezone.utc),
