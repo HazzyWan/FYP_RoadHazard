@@ -36,8 +36,8 @@ assign and track repairs. It was built for Malaysian road conditions as my Final
 
 ## Highlights
 
-- **Custom object detection model:** YOLOv8 trained on 8,540 labelled Malaysian road images merged from
-  three datasets, reaching **83.28% mAP@0.5** (target 70%) on potholes and cracks.
+- **Custom object detection model:** YOLOv8 detector for potholes and crack types, trained on a merged
+  Malaysian road dataset (now 8,560 labelled images), reaching **79.8% mAP@0.5** on validation.
 - **Robust inference pipeline:** two-pass inference with CLAHE enhancement, texture-based pothole/crack
   re-checking, crack bounding-box relocalisation and shadow guarding on top of raw YOLO output.
 - **Tropical-condition stress testing:** six synthetic scenarios (sun glare, canopy shadow, monsoon rain,
@@ -107,22 +107,27 @@ flowchart LR
 | | |
 |---|---|
 | **Architecture** | YOLOv8n (transfer learning from COCO-pretrained weights) |
-| **Classes** | Trained on `pothole` plus crack subtypes (alligator, longitudinal, transverse); reported as **pothole** and **crack** |
-| **Dataset** | **8,540 labelled Malaysian road images** (7,248 train / 862 validation / 430 test), grown from 4,318 |
+| **Classes** | `pothole`, `alligator_crack`, `longitudinal_crack`, `transverse_crack`, `other` (low-confidence crack subtypes are shown as a generic `crack`) |
+| **Dataset** | **8,560 labelled Malaysian road images** today (7,268 train / 862 validation / 430 test), plus augmented copies; it has grown since the bundled model was trained |
 | **Sources** | Malaysian pothole dataset, Roboflow "crack and pothole" dataset, Malaysian road crack dataset, plus user-submitted reports |
-| **Training** | 100 epochs, 512 × 512 input, tropical-condition augmentation |
+| **Training** | 100 epochs, 640 × 640 input, batch size 8 |
 
-**Results:**
+**Validation results** for the bundled weights ([`runs/detect/road_hazards_multi6`](runs/detect/road_hazards_multi6), best epoch):
 
-| mAP@0.5 (validation) | Target | Median inference latency |
-|:-:|:-:|:-:|
-| **83.28%** | 70% | 112 ms |
+| Precision | Recall | mAP@0.5 | mAP@0.5:0.95 |
+|:-:|:-:|:-:|:-:|
+| 0.805 | 0.744 | **0.798** | 0.457 |
 
 <p align="center">
-  <img src="docs/screenshots/training-map50-curve.png" width="520" alt="Validation mAP@0.5 over 100 epochs"/>
-  <img src="docs/screenshots/confusion-matrix.png" width="330" alt="Normalised confusion matrix: pothole, crack, other"/>
-  <br/><em>Validation mAP@0.5 over 100 epochs, and the normalised confusion matrix (pothole 0.82, crack 0.92, background 0.93).</em>
+  <img src="runs/detect/road_hazards_multi6/results.png" width="620" alt="Training and validation curves over 100 epochs"/>
 </p>
+
+<details>
+<summary><b>Confusion matrix</b></summary>
+<p align="center">
+  <img src="runs/detect/road_hazards_multi6/confusion_matrix_normalized.png" width="520" alt="Normalised confusion matrix"/>
+</p>
+</details>
 
 **Real-world behaviour**, including a known failure case:
 
