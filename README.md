@@ -36,7 +36,7 @@ assign and track repairs. It was built for Malaysian road conditions as my Final
 
 ## Highlights
 
-- **Custom object detection model:** YOLOv8 detector for potholes and crack types, trained on a merged
+- **Custom object detection model:** YOLOv8 detector for potholes and cracks, trained on a merged
   Malaysian road dataset (now 8,560 labelled images), reaching **79.8% mAP@0.5** on validation.
 - **Robust inference pipeline:** two-pass inference with CLAHE enhancement, texture-based pothole/crack
   re-checking, crack bounding-box relocalisation and shadow guarding on top of raw YOLO output.
