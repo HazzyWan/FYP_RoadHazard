@@ -187,7 +187,7 @@ Algorithm details: [`docs/guides/ALGORITHM_REFERENCE.md`](docs/guides/ALGORITHM_
 │   ├── cloud/               Cloud Run / Artifact Registry / GCS cost-control scripts
 │   └── report/              Evaluation helpers (confusion-matrix aggregation, figures)
 ├── notebooks/               Figure generation for the thesis
-├── docs/                    Guides, development logs, test cases, final report (PDF)
+├── docs/                    Guides, development logs, test cases, screenshots
 ├── Dockerfile               Cloud Run container image
 ├── firebase.json            Hosting config with /api rewrites to Cloud Run
 ├── deploy.sh / update_hosting.ps1   Deployment automation
@@ -198,7 +198,6 @@ Algorithm details: [`docs/guides/ALGORITHM_REFERENCE.md`](docs/guides/ALGORITHM_
 
 ## Documentation
 
-- [Final report (PDF)](docs/report/FYP%20-%20Final%20Report(Finalized).pdf)
 - [Algorithm reference](docs/guides/ALGORITHM_REFERENCE.md)
 - [Hosting guide](docs/guides/HOSTING_GUIDE.md) · [Operations commands](docs/guides/OPERATIONS_COMMANDS.md)
 - [Training guide](docs/guides/TRAINING_GUIDE.md) · [Development log](docs/logs/DEVELOPMENT_LOG.md)

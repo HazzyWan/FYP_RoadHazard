@@ -36,6 +36,9 @@ runs/**
 *.pt
 !runs/detect/road_hazards_multi6/weights/best.pt
 
+# --- Report drafts and PDFs (kept local only) ---
+docs/report/
+
 # --- Tools / local machine ---
 tools/
 .firebase/
