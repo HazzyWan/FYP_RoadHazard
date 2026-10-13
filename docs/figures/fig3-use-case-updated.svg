@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333" />
+    </marker>
+    <style>
+      .actor { font: 14px sans-serif; fill: #222; }
+      .actor-stick { stroke:#222; stroke-width:2; fill:none }
+      .usecase { fill:#fff; stroke:#333; stroke-width:2 }
+      .uc-text { font:13px sans-serif; fill:#111 }
+      .label { font:13px sans-serif; fill:#111 }
+      .system-box { fill: none; stroke:#666; stroke-dasharray:6 4 }
+    </style>
+  </defs>
+
+  <!-- System boundary -->
+  <rect x="260" y="40" width="860" height="620" class="system-box" rx="6" />
+  <text x="270" y="60" class="label">AI-Based Road Hazard Detection System (System Boundary)</text>
+
+  <!-- Actors (left) -->
+  <!-- Public User -->
+  <g transform="translate(50,120)">
+    <circle cx="0" cy="0" r="0" />
+    <path class="actor-stick" d="M0,-10 L0,20 M0,20 L-10,60 M0,20 L10,60 M-12,30 L12,30" />
+    <text x="40" y="10" class="actor">Public User (Citizen)</text>
+  </g>
+
+  <!-- Registered Admin/Inspector (right) -->
+  <g transform="translate(50,320)">
+    <path class="actor-stick" d="M0,-10 L0,20 M0,20 L-10,60 M0,20 L10,60 M-12,30 L12,30" />
+    <text x="40" y="10" class="actor">Registered Administrator / Inspector</text>
+  </g>
+
+  <!-- Contractor Partner (left bottom) -->
+  <g transform="translate(50,520)">
+    <path class="actor-stick" d="M0,-10 L0,20 M0,20 L-10,60 M0,20 L10,60 M-12,30 L12,30" />
+    <text x="40" y="10" class="actor">Contractor Partner</text>
+  </g>
+
+  <!-- System Engine actor (right outside box) -->
+  <g transform="translate(1120,360)">
+    <path class="actor-stick" d="M0,-10 L0,20 M0,20 L-10,60 M0,20 L10,60 M-12,30 L12,30" />
+    <text x="-200" y="10" class="actor">System Engine</text>
+  </g>
+
+  <!-- Use cases (inside system boundary) arranged in columns -->
+  <!-- Column 1 (top) -->
+  <ellipse cx="520" cy="120" rx="160" ry="30" class="usecase" />
+  <text x="520" y="124" text-anchor="middle" class="uc-text">Submit geotagged report\n(capture media & location)</text>
+
+  <ellipse cx="520" cy="200" rx="160" ry="30" class="usecase" />
+  <text x="520" y="204" text-anchor="middle" class="uc-text">View instant CV feedback\n(inference primary pass)</text>
+
+  <ellipse cx="520" cy="280" rx="160" ry="30" class="usecase" />
+  <text x="520" y="284" text-anchor="middle" class="uc-text">View verified hazards on map</text>
+
+  <ellipse cx="520" cy="360" rx="160" ry="30" class="usecase" />
+  <text x="520" y="364" text-anchor="middle" class="uc-text">Email opt-in for status updates</text>
+
+  <!-- Column 2 (admin) -->
+  <ellipse cx="880" cy="140" rx="180" ry="30" class="usecase" />
+  <text x="880" y="144" text-anchor="middle" class="uc-text">Evaluate ingestion queue\n(review AI detections)</text>
+
+  <ellipse cx="880" cy="220" rx="180" ry="30" class="usecase" />
+  <text x="880" y="224" text-anchor="middle" class="uc-text">Apply bounding corrections\n(HITL bbox edit)</text>
+
+  <ellipse cx="880" cy="300" rx="180" ry="30" class="usecase" />
+  <text x="880" y="304" text-anchor="middle" class="uc-text">Assign work tickets\n(create/queue jobs)</text>
+
+  <!-- Column 3 (contractor) -->
+  <ellipse cx="720" cy="460" rx="200" ry="30" class="usecase" />
+  <text x="720" y="464" text-anchor="middle" class="uc-text">Retrieve assigned maintenance routes</text>
+
+  <ellipse cx="720" cy="520" rx="200" ry="30" class="usecase" />
+  <text x="720" y="524" text-anchor="middle" class="uc-text">Record repair progression\n(update job status)</text>
+
+  <ellipse cx="720" cy="580" rx="200" ry="30" class="usecase" />
+  <text x="720" y="584" text-anchor="middle" class="uc-text">Upload completion proof\n(photos & metadata)</text>
+
+  <!-- Column 4 (system engine internal usecases) -->
+  <ellipse cx="1040" cy="120" rx="220" ry="28" class="usecase" />
+  <text x="1040" y="124" text-anchor="middle" class="uc-text">Manage file streaming & storage</text>
+
+  <ellipse cx="1040" cy="190" rx="220" ry="28" class="usecase" />
+  <text x="1040" y="194" text-anchor="middle" class="uc-text">Execute inference check passes\n(primary & secondary)</text>
+
+  <ellipse cx="1040" cy="260" rx="220" ry="28" class="usecase" />
+  <text x="1040" y="264" text-anchor="middle" class="uc-text">Perform bbox merges & refinement</text>
+
+  <ellipse cx="1040" cy="330" rx="220" ry="28" class="usecase" />
+  <text x="1040" y="334" text-anchor="middle" class="uc-text">Distribute email alerts to opted-in citizens</text>
+
+  <ellipse cx="1040" cy="400" rx="220" ry="28" class="usecase" />
+  <text x="1040" y="404" text-anchor="middle" class="uc-text">Update database (reports, tickets, jobs)</text>
+
+  <!-- Connections from actors to use cases -->
+  <!-- Public User -> Submit, View feedback, View map, Email opt-in -->
+  <line x1="140" y1="140" x2="360" y2="120" stroke="#333" stroke-width="2" marker-end="url(#arrow)" />
+  <line x1="140" y1="160" x2="360" y2="200" stroke="#333" stroke-width="2" marker-end="url(#arrow)" />
+  <line x1="140" y1="180" x2="360" y2="280" stroke="#333" stroke-width="2" marker-end="url(#arrow)" />
+  <line x1="140" y1="200" x2="360" y2="360" stroke="#333" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Admin -> Evaluate, Apply corrections, Assign tickets -->
+  <line x1="140" y1="340" x2="720" y2="140" stroke="#333" stroke-width="2" marker-end="url(#arrow)" />
+  <line x1="140" y1="360" x2="720" y2="220" stroke="#333" stroke-width="2" marker-end="url(#arrow)" />
+  <line x1="140" y1="380" x2="720" y2="300" stroke="#333" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Contractor -> retrieve, record, upload -->
+  <line x1="140" y1="540" x2="520" y2="460" stroke="#333" stroke-width="2" marker-end="url(#arrow)" />
+  <line x1="140" y1="560" x2="520" y2="520" stroke="#333" stroke-width="2" marker-end="url(#arrow)" />
+  <line x1="140" y1="580" x2="520" y2="580" stroke="#333" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- System Engine interactions: arrows from system actor (right) into system usecases -->
+  <line x1="1080" y1="360" x2="1040" y2="120" stroke="#333" stroke-width="2" marker-end="url(#arrow)" />
+  <line x1="1080" y1="360" x2="1040" y2="190" stroke="#333" stroke-width="2" marker-end="url(#arrow)" />
+  <line x1="1080" y1="360" x2="1040" y2="260" stroke="#333" stroke-width="2" marker-end="url(#arrow)" />
+  <line x1="1080" y1="360" x2="1040" y2="330" stroke="#333" stroke-width="2" marker-end="url(#arrow)" />
+  <line x1="1080" y1="360" x2="1040" y2="400" stroke="#333" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Include relationships (dashed lines) -->
+  <line x1="520" y1="120" x2="880" y2="140" stroke="#666" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#arrow)" />
+  <text x="700" y="110" class="label"><<includes>></text>
+
+  <line x1="520" y1="200" x2="1040" y2="190" stroke="#666" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#arrow)" />
+  <text x="800" y="180" class="label"><<performed by>></text>
+
+  <!-- Footer note -->
+  <text x="30" y="690" class="label">Created: Updated Use Case Diagram — Public User, Registered Admin/Inspector, Contractor Partner, System Engine</text>
+
+</svg>

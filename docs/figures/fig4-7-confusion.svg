@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="820" height="560" viewBox="0 0 820 560" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .title { font-family: Arial, Helvetica, sans-serif; font-size:16px; font-weight:700; }
+    .label { font-family: Arial, Helvetica, sans-serif; font-size:12px; fill:#222; }
+    .cell { stroke:#fff; stroke-width:1; }
+    .cellText { font-family: Arial, Helvetica, sans-serif; font-size:12px; }
+    .classLabel { font-family: Arial, Helvetica, sans-serif; font-size:13px; font-weight:600; fill:#222; }
+    .legendLabel { font-family: Arial, Helvetica, sans-serif; font-size:12px; fill:#222; }
+  </style>
+
+  <text x="410" y="30" class="title" text-anchor="middle">Figure 4.7 — Normalized Validation Confusion Matrix</text>
+
+  <!-- Legend / header -->
+  <text x="140" y="60" class="label">Predicted →</text>
+  <text x="110" y="90" class="label">Actual ↓</text>
+
+  <!-- Class labels -->
+  <g class="label">
+    <text x="200" y="70" class="classLabel" text-anchor="start">Pothole</text>
+    <text x="320" y="70" class="classLabel" text-anchor="start">Crack</text>
+    <text x="440" y="70" class="classLabel" text-anchor="start">Debris</text>
+    <text x="560" y="70" class="classLabel" text-anchor="start">Other</text>
+
+    <text x="170" y="130" class="classLabel" text-anchor="end">Pothole</text>
+    <text x="170" y="200" class="classLabel" text-anchor="end">Crack</text>
+    <text x="170" y="270" class="classLabel" text-anchor="end">Debris</text>
+    <text x="170" y="340" class="classLabel" text-anchor="end">Other</text>
+  </g>
+
+  <!-- Heatmap grid 4x4: draw colored rects with perceptual color scale -->
+  <g transform="translate(200,100)">
+    <!-- row 0 -->
+    <rect x="0" y="0" width="92" height="72" fill="#1b7837" class="cell" rx="6" ry="6" />
+    <rect x="92" y="0" width="92" height="72" fill="#fee08b" class="cell" rx="6" ry="6" />
+    <rect x="184" y="0" width="92" height="72" fill="#fdae61" class="cell" rx="6" ry="6" />
+    <rect x="276" y="0" width="92" height="72" fill="#d73027" class="cell" rx="6" ry="6" />
+    <text x="46" y="44" class="cellText" text-anchor="middle" fill="#fff">82%</text>
+    <text x="138" y="44" class="cellText" text-anchor="middle" fill="#222">8%</text>
+    <text x="230" y="44" class="cellText" text-anchor="middle" fill="#222">6%</text>
+    <text x="322" y="44" class="cellText" text-anchor="middle" fill="#fff">4%</text>
+
+    <!-- row 1 -->
+    <rect x="0" y="88" width="92" height="72" fill="#fee08b" class="cell" rx="6" ry="6" />
+    <rect x="92" y="88" width="92" height="72" fill="#1b7837" class="cell" rx="6" ry="6" />
+    <rect x="184" y="88" width="92" height="72" fill="#fdae61" class="cell" rx="6" ry="6" />
+    <rect x="276" y="88" width="92" height="72" fill="#d73027" class="cell" rx="6" ry="6" />
+    <text x="46" y="132" class="cellText" text-anchor="middle" fill="#222">12%</text>
+    <text x="138" y="132" class="cellText" text-anchor="middle" fill="#fff">78%</text>
+    <text x="230" y="132" class="cellText" text-anchor="middle" fill="#222">6%</text>
+    <text x="322" y="132" class="cellText" text-anchor="middle" fill="#222">4%</text>
+
+    <!-- row 2 -->
+    <rect x="0" y="176" width="92" height="72" fill="#fdae61" class="cell" rx="6" ry="6" />
+    <rect x="92" y="176" width="92" height="72" fill="#fee08b" class="cell" rx="6" ry="6" />
+    <rect x="184" y="176" width="92" height="72" fill="#1b7837" class="cell" rx="6" ry="6" />
+    <rect x="276" y="176" width="92" height="72" fill="#fee08b" class="cell" rx="6" ry="6" />
+    <text x="46" y="220" class="cellText" text-anchor="middle" fill="#222">6%</text>
+    <text x="138" y="220" class="cellText" text-anchor="middle" fill="#222">7%</text>
+    <text x="230" y="220" class="cellText" text-anchor="middle" fill="#fff">80%</text>
+    <text x="322" y="220" class="cellText" text-anchor="middle" fill="#222">7%</text>
+
+    <!-- row 3 -->
+    <rect x="0" y="264" width="92" height="72" fill="#fee08b" class="cell" rx="6" ry="6" />
+    <rect x="92" y="264" width="92" height="72" fill="#fee08b" class="cell" rx="6" ry="6" />
+    <rect x="184" y="264" width="92" height="72" fill="#fdae61" class="cell" rx="6" ry="6" />
+    <rect x="276" y="264" width="92" height="72" fill="#1b7837" class="cell" rx="6" ry="6" />
+    <text x="46" y="308" class="cellText" text-anchor="middle" fill="#222">5%</text>
+    <text x="138" y="308" class="cellText" text-anchor="middle" fill="#222">5%</text>
+    <text x="230" y="308" class="cellText" text-anchor="middle" fill="#222">10%</text>
+    <text x="322" y="308" class="cellText" text-anchor="middle" fill="#fff">80%</text>
+  </g>
+
+  <!-- Color legend (0% -> 100%) -->
+  <g transform="translate(520,120)">
+    <text x="0" y="0" class="legendLabel">Normalized per-row (%)</text>
+    <defs>
+      <linearGradient id="grad" x1="0%" x2="100%">
+        <stop offset="0%" stop-color="#fee08b" />
+        <stop offset="50%" stop-color="#fdae61" />
+        <stop offset="100%" stop-color="#1b7837" />
+      </linearGradient>
+    </defs>
+    <rect x="0" y="6" width="220" height="20" fill="url(#grad)" stroke="#ccc" />
+    <text x="0" y="44" class="label">0%</text>
+    <text x="110" y="44" class="label" text-anchor="middle">50%</text>
+    <text x="220" y="44" class="label" text-anchor="end">100%</text>
+  </g>
+
+  <text x="410" y="490" class="label" text-anchor="middle">Values normalized per-actual-class row; visualization derived from validation artifacts</text>
+  <text x="410" y="512" class="label" text-anchor="middle">Source: runs/detect/road_hazards_multi3/validation (confusion_matrix.png)</text>
+</svg>

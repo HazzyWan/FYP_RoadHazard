@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0d6efd" />
+    <title>frontend</title>
+  </head>
+  <body>
+    <script>
+      // One-time: unregister any existing service workers and clear caches,
+      // then reload so clients pick up the latest deployed assets.
+      try {
+        if (!sessionStorage.getItem('sw_unregistered_v2') && 'serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(function(regs) {
+            Promise.all(regs.map(r => r.unregister())).then(function() {
+              if (window.caches && caches.keys) {
+                caches.keys().then(function(keys) {
+                  return Promise.all(keys.map(k => caches.delete(k)));
+                }).catch(()=>{}).finally(()=>{
+                  sessionStorage.setItem('sw_unregistered_v2','1');
+                  try { location.reload(); } catch(e){}
+                });
+              } else {
+                sessionStorage.setItem('sw_unregistered_v2','1');
+                try { location.reload(); } catch(e){}
+              }
+            }).catch(()=>{});
+          }).catch(()=>{});
+        }
+      } catch (e) {
+        console.warn('SW cleanup failed', e);
+      }
+    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

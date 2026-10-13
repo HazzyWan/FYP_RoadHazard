@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="200">
+  <rect width="100%" height="100%" fill="#fff"/>
+  <text x="50%" y="20" font-size="14" text-anchor="middle" fill="#222">Figure 3.x: Stakeholder Swimlane (placeholder)</text>
+  <g font-family="Arial" font-size="12" fill="#333">
+    <rect x="0" y="40" width="250" height="160" fill="#f9f9f9" stroke="#ddd"/>
+    <text x="125" y="60" text-anchor="middle">Public</text>
+    <rect x="250" y="40" width="250" height="160" fill="#f9fff2" stroke="#e6f2e6"/>
+    <text x="375" y="60" text-anchor="middle">Backend</text>
+    <rect x="500" y="40" width="250" height="160" fill="#fff8e6" stroke="#efe1cc"/>
+    <text x="625" y="60" text-anchor="middle">Admin</text>
+    <rect x="750" y="40" width="250" height="160" fill="#eef7ff" stroke="#dfeeff"/>
+    <text x="875" y="60" text-anchor="middle">Contractor</text>
+    <text x="125" y="100" font-size="11" fill="#555">Submit → View status</text>
+    <text x="375" y="100" font-size="11" fill="#555">Ingest → Infer → Store</text>
+    <text x="625" y="100" font-size="11" fill="#555">Verify → Assign → Retrain</text>
+    <text x="875" y="100" font-size="11" fill="#555">Accept → Update → Close</text>
+  </g>
+</svg>

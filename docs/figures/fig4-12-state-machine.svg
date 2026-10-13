@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="540" viewBox="0 0 1200 540">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333" />
+    </marker>
+    <style>
+      .state { rx:12; ry:12; stroke:#333; stroke-width:1.5 }
+      .label { font: 14px sans-serif; fill:#111 }
+      .small { font: 12px sans-serif; fill:#222 }
+      .arrow { stroke:#333; stroke-width:1.6; fill:none; marker-end:url(#arrow) }
+    </style>
+  </defs>
+
+  <!-- Title -->
+  <text x="600" y="30" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="700">Figure 4.12: Operational State Machine — Status Lifecycle Transitions</text>
+
+  <!-- States: Initial Upload, Pending, Verified, Requested, In Progress, Completed, Rejected -->
+  <rect x="40" y="80" width="180" height="70" fill="#f0f4ff" class="state"/>
+  <text x="130" y="115" text-anchor="middle" class="label">Initial Upload</text>
+  <text x="130" y="135" text-anchor="middle" class="small">(client POST /api/upload)</text>
+
+  <rect x="260" y="60" width="160" height="70" fill="#cfe8ff" class="state"/>
+  <text x="340" y="95" text-anchor="middle" class="label">Pending</text>
+  <text x="340" y="115" text-anchor="middle" class="small">(no/low-confidence)</text>
+
+  <rect x="260" y="160" width="160" height="70" fill="#ffdede" class="state"/>
+  <text x="340" y="195" text-anchor="middle" class="label">Rejected</text>
+  <text x="340" y="215" text-anchor="middle" class="small">(terminal)</text>
+
+  <rect x="460" y="60" width="160" height="70" fill="#d6f5d6" class="state"/>
+  <text x="540" y="95" text-anchor="middle" class="label">Verified</text>
+  <text x="540" y="115" text-anchor="middle" class="small">(inspector confirms)</text>
+
+  <rect x="680" y="60" width="160" height="70" fill="#fff0cc" class="state"/>
+  <text x="760" y="95" text-anchor="middle" class="label">Requested</text>
+  <text x="760" y="115" text-anchor="middle" class="small">(work order)</text>
+
+  <rect x="900" y="60" width="160" height="70" fill="#e5d8ff" class="state"/>
+  <text x="980" y="95" text-anchor="middle" class="label">In Progress</text>
+  <text x="980" y="115" text-anchor="middle" class="small">(contractor accepted)</text>
+
+  <rect x="1060" y="60" width="160" height="70" fill="#e8eef2" class="state"/>
+  <text x="1140" y="95" text-anchor="middle" class="label">Completed</text>
+  <text x="1140" y="115" text-anchor="middle" class="small">(terminal)</text>
+
+  <!-- Transitions: Initial Upload -> Verified (high confidence) OR Pending (low/no detection) -->
+  <path d="M220,115 L260,95" class="arrow" />
+  <text x="240" y="85" text-anchor="middle" class="small">No/low confidence</text>
+
+  <path d="M220,115 L460,95" class="arrow" />
+  <text x="340" y="75" text-anchor="middle" class="small">High-confidence hazard</text>
+
+  <!-- Pending -> Verified or Rejected -->
+  <path d="M420,95 L460,95" class="arrow" />
+  <text x="440" y="75" text-anchor="middle" class="small">Inspector verifies</text>
+
+  <path d="M340,130 L340,160" class="arrow" />
+  <text x="360" y="145" text-anchor="start" class="small">Inspector rejects</text>
+
+  <!-- Verified -> Requested -->
+  <path d="M620,95 L680,95" class="arrow" />
+  <text x="650" y="75" text-anchor="middle" class="small">Create work order</text>
+
+  <!-- Requested -> In Progress (accept) or back to Verified (contractor rejects) -->
+  <path d="M840,95 L900,95" class="arrow" />
+  <text x="870" y="75" text-anchor="middle" class="small">Contractor accepts</text>
+
+  <path d="M860,130 L540,190" class="arrow" />
+  <text x="700" y="135" text-anchor="middle" class="small">Contractor rejects → back to Verified</text>
+
+  <!-- In Progress -> Completed -->
+  <path d="M1060,95 L1060,95" class="arrow" />
+  <path d="M1060,95 L1140,95" class="arrow" />
+  <text x="1100" y="75" text-anchor="middle" class="small">Work completed</text>
+
+  <!-- Notes box -->
+  <rect x="40" y="360" width="1180" height="140" fill="#fafafa" stroke="#ddd" rx="8"/>
+  <text x="60" y="385" class="small">Notes: Status field is stored on the `hazard_records` Firestore document and audited via `historyLogs` and `aiFeedback`. Terminal states are Completed and Rejected; Completed may trigger notifications and dataset archival for retraining.</text>
+  <!-- Notes box -->
+  <rect x="40" y="360" width="1120" height="140" fill="#fafafa" stroke="#ddd" rx="8"/>
+  <text x="60" y="385" class="small">Notes: Status mutations are recorded on the `hazard_records` Firestore document (field `status`) and audited in `historyLogs` &amp; `aiFeedback`. Final states (Completed or Rejected) remove the record from active triage queues; opted-in users receive notifications and archived assets may be added to `datasetArchive` for retraining.</text>
+
+</svg>

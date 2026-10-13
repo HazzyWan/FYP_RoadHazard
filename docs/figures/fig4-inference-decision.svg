@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="260">
+  <rect width="100%" height="100%" fill="#fff"/>
+  <text x="50%" y="24" font-size="16" text-anchor="middle" fill="#222">Figure 4.x: Inference Decision & Second-Pass (placeholder)</text>
+  <g font-family="Arial" font-size="12" fill="#333">
+    <rect x="40" y="60" width="180" height="36" rx="6" fill="#eef" stroke="#99c"/>
+    <text x="130" y="84" text-anchor="middle">Primary YOLOv8 Pass</text>
+    <rect x="260" y="40" width="180" height="36" rx="6" fill="#fff7e6" stroke="#cc9"/>
+    <text x="350" y="64" text-anchor="middle">Confidence OK?</text>
+    <rect x="260" y="120" width="180" height="36" rx="6" fill="#fff7e6" stroke="#cc9"/>
+    <text x="350" y="144" text-anchor="middle">Run CLAHE Second-Pass</text>
+    <rect x="520" y="60" width="240" height="36" rx="6" fill="#eaffea" stroke="#9c9"/>
+    <text x="640" y="84" text-anchor="middle">Consensus & BBox Refinement</text>
+    <line x1="220" y1="78" x2="260" y2="78" stroke="#666" marker-end="url(#arrow)"/>
+    <line x1="350" y1="76" x2="350" y2="120" stroke="#666" marker-end="url(#arrow)"/>
+    <line x1="440" y1="142" x2="520" y2="78" stroke="#666" marker-end="url(#arrow)"/>
+    <line x1="440" y1="60" x2="520" y2="78" stroke="#666" marker-end="url(#arrow)"/>
+  </g>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#666" />
+    </marker>
+  </defs>
+</svg>

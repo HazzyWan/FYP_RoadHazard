@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="180">
+  <rect width="100%" height="100%" fill="#fff"/>
+  <text x="50%" y="20" font-size="14" text-anchor="middle" fill="#222">Figure 3.x: Submission Context Data (placeholder)</text>
+  <g font-family="Arial" font-size="12" fill="#333">
+    <rect x="30" y="50" width="200" height="100" rx="6" fill="#f0f8ff" stroke="#99c"/>
+    <text x="130" y="80" text-anchor="middle">Client: Browser / PWA</text>
+    <text x="130" y="100" text-anchor="middle">Camera, GPS, Local Token</text>
+    <rect x="350" y="50" width="200" height="100" rx="6" fill="#fff7e6" stroke="#cc9"/>
+    <text x="450" y="80" text-anchor="middle">Server: Flask API</text>
+    <text x="450" y="100" text-anchor="middle">Upload, Ingest, Enqueue</text>
+    <rect x="670" y="50" width="200" height="100" rx="6" fill="#eaffea" stroke="#9c9"/>
+    <text x="770" y="80" text-anchor="middle">Storage: Firebase</text>
+    <text x="770" y="100" text-anchor="middle">Storage, Firestore, Auth</text>
+    <line x1="230" y1="100" x2="350" y2="100" stroke="#666" marker-end="url(#arrow)"/>
+    <line x1="550" y1="100" x2="670" y2="100" stroke="#666" marker-end="url(#arrow)"/>
+  </g>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#666" />
+    </marker>
+  </defs>
+</svg>

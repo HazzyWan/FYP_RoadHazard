@@ -1,0 +1,43 @@
+# Keep Cloud Build upload small and fast
+venv/
+.venv/
+frontend/node_modules/
+frontend/dist/
+datasets/
+!datasets/road_hazards_combined/
+!datasets/road_hazards_combined/submitted_by_class/
+!datasets/road_hazards_combined/submitted_by_class/**
+.git/
+.vscode/
+.claude/
+.firebase/
+docs/
+notebooks/
+scripts/
+tools/
+certs/
+*.pdf
+*.pem
+*-key.pem
+
+# Optional local artifacts
+runs/detect/*/train_batch*.jpg
+runs/detect/*/results*.png
+runs/detect/*/labels.jpg
+runs/detect/*/confusion_matrix*.png
+runs/detect/*/args.yaml
+runs/detect/*/weights/last.pt
+
+# Keep only the required production model from runs/
+runs/**
+!runs/
+!runs/detect/
+!runs/detect/road_hazards_multi6/
+!runs/detect/road_hazards_multi6/weights/
+!runs/detect/road_hazards_multi6/weights/best.pt
+
+# Local secrets
+secrets.local.env
+secrets.example.env
+firebase_credentials.json
+cloudrun.env

@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap');
+
+:root {
+  font-family: 'Manrope', 'Segoe UI', Tahoma, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  background-color: #f1f5f9;
+  color: #0f172a;
+  --rh-bg: #f1f5f9;
+  --rh-surface: #ffffff;
+  --rh-surface-muted: #f8fafc;
+  --rh-border: #dbe4ee;
+  --rh-text: #0f172a;
+  --rh-muted: #64748b;
+  --rh-accent: #2563eb;
+  --rh-accent-soft: #eff6ff;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--rh-bg);
+  color: var(--rh-text);
+}
+
+.card,
+.border,
+.table,
+.form-control,
+.form-select {
+  border-color: var(--rh-border) !important;
+}
+
+.card {
+  border-radius: 14px !important;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+}
+
+.btn-primary {
+  background-color: var(--rh-accent) !important;
+  border-color: var(--rh-accent) !important;
+}
+
+.btn-primary:hover {
+  background-color: #1d4ed8 !important;
+  border-color: #1d4ed8 !important;
+}
+
+.table > :not(caption) > * > * {
+  vertical-align: middle;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #93c5fd !important;
+  box-shadow: 0 0 0 0.18rem rgba(37, 99, 235, 0.15) !important;
+}

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="260">
+  <rect width="100%" height="100%" fill="#fff"/>
+  <text x="50%" y="20" font-size="16" text-anchor="middle" fill="#222">Figure 4.x: MLOps Retraining & Promotion Pipeline (placeholder)</text>
+  <g font-family="Arial" font-size="12" fill="#333">
+    <rect x="20" y="50" width="180" height="36" rx="6" fill="#f8f8ff" stroke="#cfcfff"/>
+    <text x="110" y="74" text-anchor="middle">Feedback Samples</text>
+    <rect x="230" y="50" width="180" height="36" rx="6" fill="#fff8e6" stroke="#efe0c4"/>
+    <text x="320" y="74" text-anchor="middle">Curated Pool (500+)</text>
+    <rect x="440" y="50" width="200" height="36" rx="6" fill="#eef" stroke="#cfe"/>
+    <text x="540" y="74" text-anchor="middle">Train Candidate</text>
+    <rect x="660" y="50" width="200" height="36" rx="6" fill="#eaffea" stroke="#cfe"/>
+    <text x="760" y="74" text-anchor="middle">Validation & Gate</text>
+    <rect x="880" y="50" width="100" height="36" rx="6" fill="#fff4f4" stroke="#f0c"/>
+    <text x="930" y="74" text-anchor="middle">Promote</text>
+    <line x1="200" y1="68" x2="230" y2="68" stroke="#666" marker-end="url(#arrow)"/>
+    <line x1="410" y1="68" x2="440" y2="68" stroke="#666" marker-end="url(#arrow)"/>
+    <line x1="640" y1="68" x2="660" y2="68" stroke="#666" marker-end="url(#arrow)"/>
+    <line x1="860" y1="68" x2="880" y2="68" stroke="#666" marker-end="url(#arrow)"/>
+  </g>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#666" />
+    </marker>
+  </defs>
+</svg>

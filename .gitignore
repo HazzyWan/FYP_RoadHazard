@@ -1,0 +1,46 @@
+# --- Secrets (never commit) ---
+firebase_credentials.json
+*-firebase-adminsdk-*.json
+cloudrun.env
+*.env
+.env
+.env.*
+!.env.example
+!secrets.example.env
+!frontend/.env.production
+certs/
+*.pem
+
+# --- Python ---
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+
+# --- Node / frontend ---
+node_modules/
+frontend/dist/
+*.log
+
+# --- Data & model artifacts (too large for GitHub) ---
+datasets/
+runs/**
+!runs/
+!runs/detect/
+!runs/detect/road_hazards_multi6/
+!runs/detect/road_hazards_multi6/weights/
+!runs/detect/road_hazards_multi6/weights/best.pt
+!runs/detect/road_hazards_multi6/*.png
+!runs/detect/road_hazards_multi6/results.csv
+!runs/detect/road_hazards_multi6/args.yaml
+*.pt
+!runs/detect/road_hazards_multi6/weights/best.pt
+
+# --- Tools / local machine ---
+tools/
+.firebase/
+.claude/settings.local.json
+.vscode/
+*.code-workspace
+Thumbs.db
+.DS_Store
